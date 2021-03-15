@@ -1,11 +1,11 @@
 {
-  "name": "electron-react-boilerplate",
+  "name": "fyler",
   "version": "1.0.0",
-  "description": "Minimal configuration for electronjs and reactjs",
+  "description": "Confert image to pdf",
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andreagualandi/electron-react-boilerplate.git"
+    "url": "git+https://github.com/andreagualandi/fyler.git"
   },
   "scripts": {
     "prod": "webpack --mode production --config webpack.build.config.js --progress && electron --noDevServer .",
