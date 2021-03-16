@@ -2,6 +2,8 @@
   "name": "fyler",
   "version": "1.0.0",
   "description": "Confert image to pdf",
+  "author": "Andrea Gualandi",
+  "license": "ISC",
   "main": "main.js",
   "repository": {
     "type": "git",
@@ -13,11 +15,15 @@
     "build": "webpack --mode production --config webpack.build.config.js",
     "package": "npm run build && electron-packager ./ --out=./builds --platform=all",
     "packageWin": "npm run build && electron-packager ./ --out=./builds --platform=win32",
-    "debug": "node --trace-deprecation ./node_modules/.bin/webpack --config webpack.build.config.js --mode production"
+    "debug": "node --trace-deprecation ./node_modules/.bin/webpack --config webpack.build.config.js --mode production",
+    "pack": "electron-builder --dir",
+    "dist": "DEBUG=electron-builder electron-builder -w",
+    "rebuild": "electron-rebuild -f -w sharp"
   },
-  "author": "Andrea Gualandi",
-  "license": "ISC",
   "dependencies": {
+    "file-type": "^16.3.0",
+    "jimp": "^0.16.1",
+    "pdf-lib": "^1.16.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0"
@@ -29,7 +35,9 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.1.2",
     "electron": "^12.0.1",
+    "electron-builder": "^22.10.5",
     "electron-packager": "^15.2.0",
+    "electron-rebuild": "^2.3.5",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "less": "^4.1.1",
@@ -40,5 +48,43 @@
     "webpack": "^5.25.1",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "build": {
+    "appId": "com.electron.fyler",
+    "nodeGypRebuild": false,
+    "npmRebuild": true,
+    "linux": {
+      "category": "Utility",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
   }
 }
