@@ -4,7 +4,7 @@ const ipc = require('electron').ipcMain
 
 const { process } = require('./controllers/ImageController');
 //const { getVersion, cut } = require('./controllers/PdfController'); 
-const { getFiles } = require('./controllers/AppController');
+const { getFiles, getFolder } = require('./controllers/AppController');
 
 const routes = {
     image: {
@@ -16,6 +16,7 @@ const routes = {
     }, */
     app: {
         getFiles: getFiles,
+        getFolder: getFolder,
     }
 };
 

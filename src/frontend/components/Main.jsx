@@ -1,11 +1,11 @@
 import React from 'react'
-import { app, image } from '../../Client';
-import Table from '../table/Table';
-import InputText from '../inputText/InputText';
+import { app, image } from '../Client';
+import Table from './table/Table';
+import InputText from './inputText/InputText';
 
-import './home.less';
+import './main.less';
 
-export default class Home extends React.Component {
+export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +17,7 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        console.log('player.mount');
+        console.log('main.mount');
         this.columns = [
             {
                 Header: 'Files',
@@ -37,7 +37,7 @@ export default class Home extends React.Component {
     }
 
     componentWillUnmount() {
-        console.log('player.unmount');
+        console.log('main.unmount');
     }
 
     /* shouldComponentUpdate(nextProps, nextState) {
@@ -56,7 +56,7 @@ export default class Home extends React.Component {
     };
 
     handleClickSubmit = async () => {
-        await image.process(this.state.files);
+        await image.process(this.state.files, this.state.oFolder);
     };
 
 
@@ -65,7 +65,7 @@ export default class Home extends React.Component {
         const files = await app.getFiles();
         console.log('FILES', files);
         this.setState({ files: files });
-        //const files = ['/home/andrea/Immagini/1920x1080.png'];
+
         const data = this.makeData(files);
         this.setState({ data: data });
     };
@@ -81,18 +81,18 @@ export default class Home extends React.Component {
         this.setState({ data: [] });
     };
 
-    handleClickFolderSelector = () => {
-        return '/tmp';
+    handleClickFolderSelector = async () => {
+        const folder = await app.getFolder();
+        this.setState({ oFolder: folder });
     }
-
 
     render() {
         return (
-            <div className="home-content">
+            <div className="main-content">
                 <div className="files">
                     <div className="buttons">
                         <button className="button-add" onClick={this.handleClickAddFiles}>+</button>
-                        <button className="button-clear" onClick={this.handleClickClearFiles}>-</button>
+                        <button className="button-clear" onClick={this.handleClickClearFiles}>x</button>
                     </div>
                     {
                         this.state.data.length > 0

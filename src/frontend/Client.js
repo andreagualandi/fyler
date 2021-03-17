@@ -10,7 +10,7 @@ async function call(endpoint, action, data = {}) {
 }
 
 const image = {
-    process: (files) => call('api-image', 'process', { files: files }),
+    process: (files, oFolder) => call('api-image', 'process', { files: files, oFolder: oFolder }),
 }
 
 /*const ffmpeg = {
@@ -20,6 +20,7 @@ const image = {
 
 const app = {
     getFiles: () => call('api-app', 'getFiles'),
+    getFolder: () => call('api-app', 'getFolder'),
 }
 
 export { app, image };

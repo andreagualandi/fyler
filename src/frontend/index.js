@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { MemoryRouter } from 'react-router-dom';
 import './global.less';
-import App from './components/App';
+import Main from './components/Main';
 
 document.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -14,7 +13,4 @@ document.addEventListener('drop', (e) => {
     return false;
 }, false);
 
-ReactDOM.render(
-    <MemoryRouter>
-        <App />
-    </MemoryRouter> , document.getElementById('root'));
+ReactDOM.render(<Main />, document.getElementById('root'));
