@@ -11,8 +11,7 @@ function getDownloadPath(args) {
 
 async function getFiles(args) {
     const response = await dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] });
-    console.log('FILES:', response)
-    return !response.canceled ? response.filePaths : null;
+    return response.filePaths;
 }
 
 module.exports = { getDownloadPath, getFiles };
