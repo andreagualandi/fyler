@@ -3,6 +3,9 @@ import { app, image } from '../Client';
 import Table from './table/Table';
 import InputText from './inputText/InputText';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faTrashAlt, faPlay, faFolder } from '@fortawesome/free-solid-svg-icons'
+
 import './main.less';
 
 export default class Main extends React.Component {
@@ -91,8 +94,8 @@ export default class Main extends React.Component {
             <div className="main-content">
                 <div className="files">
                     <div className="buttons">
-                        <button className="button-add" onClick={this.handleClickAddFiles}>+</button>
-                        <button className="button-clear" onClick={this.handleClickClearFiles}>x</button>
+                        <button className="button-add" onClick={this.handleClickAddFiles}><FontAwesomeIcon icon={faPlus} /></button>
+                        <button className="button-clear" onClick={this.handleClickClearFiles}><FontAwesomeIcon icon={faTrashAlt} /></button>
                     </div>
                     {
                         this.state.data.length > 0
@@ -101,8 +104,10 @@ export default class Main extends React.Component {
                     }
                 </div>
                 <div className="form">
-                    <InputText onSubmitCallback={this.handleClickFolderSelector} data={this.state.oFolder} placeholder='Output folder' />
-                    <button onClick={this.handleClickSubmit}>Start</button>
+                    <InputText onSubmitCallback={this.handleClickFolderSelector} data={this.state.oFolder} placeholder='Output folder'>
+                        <FontAwesomeIcon icon={faFolder} />
+                    </InputText>
+                    <button onClick={this.handleClickSubmit}><FontAwesomeIcon icon={faPlay} /></button>
                 </div>
             </div>
         );

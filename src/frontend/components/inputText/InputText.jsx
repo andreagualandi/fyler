@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import './inputText.less';
 
-export default function inputText({ onSubmitCallback, data, placeholder }) {
+export default function inputText({ onSubmitCallback, data, placeholder, children }) {
     const [text, setText] = useState('');
 
     const onChange = useCallback((e) => setText(e.target.value), [setText]);
@@ -18,7 +18,7 @@ export default function inputText({ onSubmitCallback, data, placeholder }) {
     return (
         <form className="input-form" onSubmit={onSubmit}>
             <input className="input-text" type="text" onChange={onChange} placeholder={placeholder} value={text} />
-            <input className="input-button" type="submit" value="Submit" />
+            <button className="input-button" type="submit" value="Submit" >{children}</button>
         </form>
     );
 };
