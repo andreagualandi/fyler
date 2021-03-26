@@ -62,36 +62,48 @@ export default class Main extends React.Component {
         await image.process(this.state.files, this.state.oFolder);
     };
 
+    addFiles(files) {
+        //join and remove duplicates
+        const joined = [...new Set(this.state.files.concat(files))];
+
+        const data = joined.map((file) => {
+            const splitted = file.split('.');
+            return { name: file, type: splitted[1] };
+        });
+
+        this.setState({ files: joined });
+        console.log('STATE.FILES', this.state.files);
+        this.setState({ data: data });
+    }
+
 
 
     handleClickAddFiles = async () => {
         const files = await app.getFiles();
         console.log('FILES', files);
-        this.setState({ files: files });
-
-        const data = this.makeData(files);
-        this.setState({ data: data });
+        this.addFiles(files);
     };
-
-    makeData(files) {
-        return files.map((file) => {
-            const splitted = file.split('.');
-            return { name: file, type: splitted[1] };
-        });
-    }
 
     handleClickClearFiles = () => {
         this.setState({ data: [] });
+        this.setState({ files: [] });
     };
 
     handleClickFolderSelector = async () => {
         const folder = await app.getFolder();
         this.setState({ oFolder: folder });
-    }
+    };
+
+    handleDrop = (e) => {
+        e.preventDefault();
+        const fileList = e.dataTransfer.files;
+        const files = Object.keys(fileList).map((key) => fileList[key].path);
+        this.addFiles(files);
+    };
 
     render() {
         return (
-            <div className="main-content">
+            <div className="main-content" onDrop={this.handleDrop}>
                 <div className="files">
                     <div className="buttons">
                         <button className="button-add" onClick={this.handleClickAddFiles}><FontAwesomeIcon icon={faPlus} /></button>
