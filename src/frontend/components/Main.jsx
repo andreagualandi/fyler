@@ -1,7 +1,7 @@
 import React from 'react'
 import { app, image } from '../Client';
-import Table from './table/Table';
 import InputText from './inputText/InputText';
+import MyList from './list/List';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrashAlt, faPlay, faFolder } from '@fortawesome/free-solid-svg-icons'
@@ -13,30 +13,12 @@ export default class Main extends React.Component {
         super(props);
         this.state = {
             files: [],
-            data: [],
             oFolder: '',
         }
-        this.columns = [];
     }
 
     componentDidMount() {
         console.log('main.mount');
-        this.columns = [
-            {
-                Header: 'Files',
-                columns: [
-                    {
-                        Header: 'Name',
-                        accessor: 'name',
-                    },
-                    {
-                        Header: 'Type',
-                        accessor: 'type',
-                    },
-                ],
-            }
-        ];
-
     }
 
     componentWillUnmount() {
@@ -59,21 +41,15 @@ export default class Main extends React.Component {
     };
 
     handleClickSubmit = async () => {
-        await image.process(this.state.files, this.state.oFolder);
+        console.log('lista da elaborare', this.state.files);
+        //await image.process(this.state.files, this.state.oFolder);
     };
 
     addFiles(files) {
         //join and remove duplicates
         const joined = [...new Set(this.state.files.concat(files))];
-
-        const data = joined.map((file) => {
-            const splitted = file.split('.');
-            return { name: file, type: splitted[1] };
-        });
-
         this.setState({ files: joined });
         console.log('STATE.FILES', this.state.files);
-        this.setState({ data: data });
     }
 
 
@@ -85,7 +61,6 @@ export default class Main extends React.Component {
     };
 
     handleClickClearFiles = () => {
-        this.setState({ data: [] });
         this.setState({ files: [] });
     };
 
@@ -97,8 +72,14 @@ export default class Main extends React.Component {
     handleDrop = (e) => {
         e.preventDefault();
         const fileList = e.dataTransfer.files;
+        console.log('Files Dropperd', fileList);
         const files = Object.keys(fileList).map((key) => fileList[key].path);
         this.addFiles(files);
+    };
+
+    handleListChange = (fileList) => {
+        console.log('nuova lista', fileList);
+        this.setState({ files: fileList });
     };
 
     render() {
@@ -110,8 +91,8 @@ export default class Main extends React.Component {
                         <button className="button-clear" onClick={this.handleClickClearFiles}><FontAwesomeIcon icon={faTrashAlt} /></button>
                     </div>
                     {
-                        this.state.data.length > 0
-                            ? <Table columns={this.columns} data={this.state.data} />
+                        this.state.files.length > 0
+                            ? <MyList items={this.state.files} onUpdate={this.handleListChange} />
                             : <div className="files-placeholder">EMPTY</div>
                     }
                 </div>
@@ -125,3 +106,4 @@ export default class Main extends React.Component {
         );
     }
 }
+
