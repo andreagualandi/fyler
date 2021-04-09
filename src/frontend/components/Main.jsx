@@ -1,10 +1,10 @@
 import React from 'react'
 import { app, image } from '../Client';
-import InputText from './inputText/InputText';
+import Settings from './settings/Settings';
 import MyList from './list/List';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTrashAlt, faPlay, faFolder } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 import './main.less';
 
@@ -13,36 +13,14 @@ export default class Main extends React.Component {
         super(props);
         this.state = {
             files: [],
-            oFolder: '',
+            settings: {
+                oFolder: '',
+            },
         }
     }
-
-    componentDidMount() {
-        console.log('main.mount');
-    }
-
-    componentWillUnmount() {
-        console.log('main.unmount');
-    }
-
-    /* shouldComponentUpdate(nextProps, nextState) {
-        return nextState.currTime !== 
-        if (nextState.source !== this.state.player) {
-            return true;
-        }
-        if (nextProps.source !== this.props.source) {
-            return true;
-        }
-        return false;
-    } */
 
     componentDidUpdate(prevProps, prevState) {
         console.log('UPDATE');
-    };
-
-    handleClickSubmit = async () => {
-        console.log('lista da elaborare', this.state.files);
-        //await image.process(this.state.files, this.state.oFolder);
     };
 
     addFiles(files) {
@@ -52,8 +30,6 @@ export default class Main extends React.Component {
         console.log('STATE.FILES', this.state.files);
     }
 
-
-
     handleClickAddFiles = async () => {
         const files = await app.getFiles();
         console.log('FILES', files);
@@ -62,11 +38,6 @@ export default class Main extends React.Component {
 
     handleClickClearFiles = () => {
         this.setState({ files: [] });
-    };
-
-    handleClickFolderSelector = async () => {
-        const folder = await app.getFolder();
-        this.setState({ oFolder: folder });
     };
 
     handleDrop = (e) => {
@@ -80,6 +51,12 @@ export default class Main extends React.Component {
     handleListChange = (fileList) => {
         console.log('nuova lista', fileList);
         this.setState({ files: fileList });
+    };
+
+    handleFormSubmit = async (settings) => {
+        console.log('Settings', settings);
+        this.setState({ settings: settings });
+        await image.process(this.state.files, settings.oFolder);
     };
 
     render() {
@@ -97,10 +74,7 @@ export default class Main extends React.Component {
                     }
                 </div>
                 <div className="form">
-                    <InputText onSubmitCallback={this.handleClickFolderSelector} data={this.state.oFolder} placeholder='Output folder'>
-                        <FontAwesomeIcon icon={faFolder} />
-                    </InputText>
-                    <button onClick={this.handleClickSubmit}><FontAwesomeIcon icon={faPlay} /></button>
+                    <Settings onSubmitCallback={this.handleFormSubmit} />
                 </div>
             </div>
         );
