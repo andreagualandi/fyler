@@ -9,8 +9,12 @@ export default function settings({ onSubmitCallback, data }) {
     const [outFolder, setOutFolder] = useState('');
     const onChangeOutFolder = useCallback((e) => setOutFolder(e.target.value), [setOutFolder]);
 
-    const [exportType, setExportType] = useState('single');
-    const onChangeExportType = useCallback((e) => setExportType(e.target.value), [setExportType]);
+    const [exportMode, setExportMode] = useState('single');
+    const onChangeExportMode = useCallback((mode) => () => setExportMode(mode), [setExportMode]);
+
+    const [fileType, setFileType] = useState('pdf');
+    const onChangeFileType = useCallback((e) => setFileType(e.target.value), [setFileType]);
+
 
     const handleClickFolderSelector = useCallback(async (e) => {
         e.preventDefault();
@@ -21,36 +25,46 @@ export default function settings({ onSubmitCallback, data }) {
     const onSubmit = useCallback(
         (e) => {
             e.preventDefault();
-            onSubmitCallback({ oFolder: outFolder, exportType: exportType });
+            onSubmitCallback({ oFolder: outFolder, exportMode: exportMode, fileType: fileType });
         },
-        [onSubmitCallback, outFolder, exportType]
+        [onSubmitCallback, outFolder, exportMode, fileType]
     );
 
-    useEffect(() => (data && setOutFolder(data)), [data]);
+    //useEffect(() => (data && setOutFolder(data)), [data]);
 
     return (
         <form className="input-form" onSubmit={onSubmit}>
-            <div className="radio-container">
-                <div className="radio-div">
-                    <div className="radio-button">
-                        <label>Single</label>
-                        <input type="radio" value="single" name="exportType" checked={exportType === "single"} onChange={onChangeExportType} />
 
+            <div className="tile-container">
+                <label className="tile-container-label">File output mode</label>
+                <div className={`tile ${exportMode !== 'single' && 'disabled'}`}>
+                    <div className="tile-header" onClick={onChangeExportMode("single")}>Single</div>
+                    <div className="tile-body">
+                        <label>Name:</label>
+                        <input className="input-text" type="text" placeholder="es: out" disabled={exportMode !== 'single'} />
                     </div>
-                    <input className="input-text" type="text" placeholder="File name" />
                 </div>
-                <div className="radio-div">
-                    <div className="radio-button">
-                        <label>Multiple</label>
-                        <input type="radio" value="multiple" name="exportType" checked={exportType === "multiple"} onChange={onChangeExportType} />
+
+                <div className={`tile ${exportMode !== 'multiple' && 'disabled'}`}>
+                    <div className="tile-header" onClick={onChangeExportMode("multiple")}>Multiple</div>
+                    <div className="tile-body">
+                        <label>Suffix:</label>
+                        <input className="input-text" type="text" placeholder="es: _new" disabled={exportMode !== 'multiple'} />
+                        <label>Type:</label>
+                        <select name="select" value={fileType} onChange={onChangeFileType} disabled={exportMode !== 'multiple'}>
+                            <option value="pdf">PDF</option>
+                            <option value="jpg">JPG</option>
+                        </select>
                     </div>
-                    <input className="input-text" type="text" placeholder="Append postfix" />
                 </div>
+
             </div>
+
             <div className="out-folder">
                 <input className="input-text" type="text" onChange={onChangeOutFolder} placeholder="Output folder" value={outFolder} />
                 <button className="input-button" onClick={handleClickFolderSelector} ><FontAwesomeIcon icon={faFolder} /></button>
             </div>
+
             <button type="submit" value="Submit"><FontAwesomeIcon icon={faPlay} /></button>
         </form >
     );

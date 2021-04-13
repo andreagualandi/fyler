@@ -9,38 +9,80 @@
     height: 2em;
 }
 
-
-.radio-container {
-    display: flex;
+.disabled {
+    opacity: 0.6;
+    border-color: lightgray !important;
+    border-width: 1px !important;
 }
 
-.radio-div {
-    display: flex;
-    width: 50%;
-    height: 200px;
-    flex-direction: column;
-    padding: 10px;
+.tile-container {
+    position: relative;
     border-width: thin;
     border-style: solid;
     border-radius: 5px;
-    margin: 0px 10px 0px 10px;
+    width: 450px;
+    padding: 10px;
 }
 
-.radio-button {
-    display: inline-flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: flex-end;
-    
+.tile-container-label{
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background-color: white;
+    width: fit-content;
+    padding: 0px 5px;
 }
 
-.radio-button label {
+.tile{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: blue;
+    margin:10px;
+}
+
+.tile:hover{
+    border-color: blue;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.tile-header{
     font-size: x-large;
-    margin-left: 10px;
+    background-color: lightsteelblue;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px 5px 0px 0px;
 }
 
-.radio-button input {
-    margin: 0;
+.tile-header:hover{
+    opacity: 0.8;
+}
+
+.tile-body{
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.tile-body label{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.tile-body input{
+    width: 100%;
+}
+
+.tile-body select{
+    height: 2em;
+    padding: 1px 2px;
+    box-sizing: unset;
+    border-radius: 3px;
+    border-width: 1px;
 }
 
 .out-folder{
