@@ -10,13 +10,9 @@ async function call(endpoint, action, data = {}) {
 }
 
 const image = {
-    process: (files, oFolder) => call('api-image', 'process', { files: files, oFolder: oFolder }),
+    process: (files, settings) => call('api-image', 'process', { files: files, settings: settings }),
+    compress: (files, settings) => call('api-image', 'compress', { files: files, settings: settings }),
 }
-
-/*const ffmpeg = {
-    getVersion: () => call('api-ffmpeg', 'getVersion'),
-    cut: (args) => call('api-ffmpeg', 'cut', args),
-} */
 
 const app = {
     getFiles: () => call('api-app', 'getFiles'),

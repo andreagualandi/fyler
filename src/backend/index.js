@@ -2,18 +2,14 @@
 
 const ipc = require('electron').ipcMain
 
-const { process } = require('./controllers/ImageController');
-//const { getVersion, cut } = require('./controllers/PdfController'); 
+const { process, compress } = require('./controllers/ImageController');
 const { getFiles, getFolder } = require('./controllers/AppController');
 
 const routes = {
     image: {
         process: process,
+        compress: compress,
     },
-    /*pdf: {
-        getVersion: getVersion,
-        cut: cut,
-    }, */
     app: {
         getFiles: getFiles,
         getFolder: getFolder,
@@ -28,15 +24,6 @@ async function imageRoute(event, args) {
         return null;
     }
 }
-/*
-async function pdfRoute(event, args) {
-    try {
-        return await routes.pdf[args.action](args)
-    } catch (e) {
-        console.error('pdf - Error:', e);
-        return null;
-    }
-} */
 
 async function appRoute(event, args) {
     try {
@@ -48,5 +35,4 @@ async function appRoute(event, args) {
 }
 
 ipc.handle('api-image', imageRoute);
-//ipc.handle('api-pdf', pdfRoute);
 ipc.handle('api-app', appRoute);

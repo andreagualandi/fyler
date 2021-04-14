@@ -56,7 +56,11 @@ export default class Main extends React.Component {
     handleFormSubmit = async (settings) => {
         console.log('Settings', settings);
         this.setState({ settings: settings });
-        await image.process(this.state.files, settings.oFolder);
+        if (settings.exportMode === 'single') {
+            await image.process(this.state.files, settings);
+        } else {
+            await image.compress(this.state.files, settings);
+        }
     };
 
     render() {

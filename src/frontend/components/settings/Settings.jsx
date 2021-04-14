@@ -9,6 +9,12 @@ export default function settings({ onSubmitCallback, data }) {
     const [outFolder, setOutFolder] = useState('');
     const onChangeOutFolder = useCallback((e) => setOutFolder(e.target.value), [setOutFolder]);
 
+    const [fileName, setFileName] = useState('');
+    const onChangeFileName = useCallback((e) => setFileName(e.target.value), [setFileName]);
+
+    const [fileSuffix, setFileSuffix] = useState('');
+    const onChangeFileSuffix = useCallback((e) => setFileSuffix(e.target.value), [setFileSuffix]);
+
     const [exportMode, setExportMode] = useState('single');
     const onChangeExportMode = useCallback((mode) => () => setExportMode(mode), [setExportMode]);
 
@@ -25,9 +31,15 @@ export default function settings({ onSubmitCallback, data }) {
     const onSubmit = useCallback(
         (e) => {
             e.preventDefault();
-            onSubmitCallback({ oFolder: outFolder, exportMode: exportMode, fileType: fileType });
+            onSubmitCallback({
+                oFolder: outFolder,
+                exportMode: exportMode,
+                fileType: fileType,
+                fileName: fileName,
+                fileSuffix: fileSuffix,
+            });
         },
-        [onSubmitCallback, outFolder, exportMode, fileType]
+        [onSubmitCallback, outFolder, exportMode, fileType, fileName, fileSuffix]
     );
 
     //useEffect(() => (data && setOutFolder(data)), [data]);
@@ -37,11 +49,19 @@ export default function settings({ onSubmitCallback, data }) {
 
             <div className="tile-container">
                 <label className="tile-container-label">File output mode</label>
+
                 <div className={`tile ${exportMode !== 'single' && 'disabled'}`}>
                     <div className="tile-header" onClick={onChangeExportMode("single")}>Single</div>
                     <div className="tile-body">
                         <label>Name:</label>
-                        <input className="input-text" type="text" placeholder="es: out" disabled={exportMode !== 'single'} />
+                        <input
+                            className="input-text"
+                            type="text"
+                            placeholder="es: out"
+                            disabled={exportMode !== 'single'}
+                            onChange={onChangeFileName}
+                            value={fileName}
+                        />
                     </div>
                 </div>
 
@@ -49,7 +69,14 @@ export default function settings({ onSubmitCallback, data }) {
                     <div className="tile-header" onClick={onChangeExportMode("multiple")}>Multiple</div>
                     <div className="tile-body">
                         <label>Suffix:</label>
-                        <input className="input-text" type="text" placeholder="es: _new" disabled={exportMode !== 'multiple'} />
+                        <input
+                            className="input-text"
+                            type="text"
+                            placeholder="es: _new"
+                            disabled={exportMode !== 'multiple'}
+                            onChange={onChangeFileSuffix}
+                            value={fileSuffix}
+                        />
                         <label>Type:</label>
                         <select name="select" value={fileType} onChange={onChangeFileType} disabled={exportMode !== 'multiple'}>
                             <option value="pdf">PDF</option>
