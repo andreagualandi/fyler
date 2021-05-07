@@ -28,23 +28,28 @@ async function process(args) {
     //execute
     const pdf = await PDFDocument.create()
 
-    await Promise.all(
+    //Process images in parallel
+    const newImages = await Promise.all(
         files.map(async (item) => {
             const fInfo = await File.getFileInfo(item);
-
             const bytes = await Image.execute(item, fInfo.mime, 800);
 
-            const img = fInfo.ext === 'png' ? await pdf.embedPng(bytes) : await pdf.embedJpg(bytes);
-            const { width, height } = img
-            const page = pdf.addPage([width, height]);
-
-            page.drawImage(img);
+            return fInfo.ext === 'png' ? await pdf.embedPng(bytes) : await pdf.embedJpg(bytes);
         })
     );
 
+    //Create pdf with images in the correct order
+    newImages.map(image => {
+        //console.log('promise', r)
+        const { width, height } = image
+        const page = pdf.addPage([width, height]);
+
+        page.drawImage(image);
+    });
+
     const pdfBytes = await pdf.save()
     console.log('writing....');
-    fs.writeFileSync(path.join(settings.oFolder, `${settings.fileName}.pdf`), pdfBytes);
+    await fs.writeFile(path.join(settings.oFolder, `${settings.fileName}.pdf`), pdfBytes);
 }
 
 module.exports = { process, compress };
