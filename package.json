@@ -9,13 +9,10 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "concurrently \"rollup -c -w\" \"npm run electron\"",
     "start": "sirv public --no-clear",
     "electron": "wait-on http://localhost:8080 && electron .",
-    "electron-dev": "concurrently \"npm run dev\" \"npm run electron\"",
-    "preelectron-pack": "npm run build",
-    "electron-pack": "electron-builder",
-    "pack-win": "npm run build && electron-builder build --win portable"
+    "pack-win-exe": "npm run build && electron-builder build --win portable"
   },
   "author": "Andrea Gualandi",
   "license": "ISC",
