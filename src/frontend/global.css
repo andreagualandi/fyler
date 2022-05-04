@@ -1,0 +1,87 @@
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    /* background: #202020;
+    color: #a8a8a8;*/
+    background-color: #2E2F3A;
+    color: #B4B3BA;
+}
+
+input {
+    background: #444452;
+    color: #B4B3BA;
+    border: 1px solid hsl(0deg 0% 19%);
+    border-radius: 2px;
+}
+
+input:focus-visible {
+    outline-style: solid;
+    outline-color: #fff;
+}
+
+select {
+    /* Reset Select */
+    /*appearance: none;*/
+    outline: 0;
+    border: 1px solid hsl(0deg 0% 19%);
+    border-radius: 2px;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: #B4B3BA;
+    background-color: #444452;
+    background-image: none;
+    cursor: pointer;
+
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+}
+
+select:hover::after {
+    color: #f39c12;
+}
+
+button {
+    border: 1px solid hsl(0deg 0% 19%);
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0;
+    background-color: #444f97;
+    color: #B4B3BA;
+    font-size: 1.2em;
+}
+
+button:hover {
+    /*background-color: #515161;*/
+    background-color: #5863ad;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #444f97;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #5863ad;
+}

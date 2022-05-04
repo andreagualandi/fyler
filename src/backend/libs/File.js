@@ -1,17 +1,23 @@
 'use strict';
 
-const FileType = require('file-type');
+const mime = require('mime-types');
 const path = require('path');
 
 async function getFileInfo(file) {
-    const info = await FileType.fromFile(file);
+    const mime = getFileMimeType(file);
+    const fileInfo = path.parse(file);
 
     return {
-        fullName: path.basename(file), //file.jpg
-        name: path.basename(file, info.ext),//file
+        fullName: fileInfo.base, //file.jpg
+        name: fileInfo.name,//file
         path: path.dirname(file),
-        ...info //ext: jpg, mime: image/jpeg
+        ext: fileInfo.ext, //.jpg
+        mime: mime //ext: jpg, mime: image/jpeg
     };
+}
+
+function getFileMimeType(file) {
+    return mime.lookup(file);
 }
 
 module.exports = { getFileInfo };

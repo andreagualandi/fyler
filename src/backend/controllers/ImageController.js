@@ -7,6 +7,7 @@ const { PDFDocument } = require('pdf-lib');
 
 const fs = require('fs/promises');
 const path = require('path');
+const { Console } = require('console');
 
 async function compress(args) {
     const { files, settings } = args.data;
@@ -18,7 +19,7 @@ async function compress(args) {
             console.log('Compress:', fInfo.fullName);
 
             const bytes = await Image.execute(file, fInfo.mime, 800);
-            await fs.writeFile(path.join(settings.oFolder, `${fInfo.name}_${settings.fileSuffix}.${fInfo.ext}`), bytes);
+            await fs.writeFile(path.join(settings.oFolder, `${fInfo.name}_${settings.fileSuffix}${fInfo.ext}`), bytes);
         })
     );
 }
@@ -31,16 +32,14 @@ async function process(args) {
     //Process images in parallel
     const newImages = await Promise.all(
         files.map(async (item) => {
-            const fInfo = await File.getFileInfo(item);
-            const bytes = await Image.execute(item, fInfo.mime, 800);
+            const bytes = await Image.resize(item, 800);
 
-            return fInfo.ext === 'png' ? await pdf.embedPng(bytes) : await pdf.embedJpg(bytes);
+            return await pdf.embedJpg(bytes);
         })
     );
 
     //Create pdf with images in the correct order
     newImages.map(image => {
-        //console.log('promise', r)
         const { width, height } = image
         const page = pdf.addPage([width, height]);
 
@@ -50,6 +49,12 @@ async function process(args) {
     const pdfBytes = await pdf.save()
     console.log('writing....');
     await fs.writeFile(path.join(settings.oFolder, `${settings.fileName}.pdf`), pdfBytes);
+    console.log('done');
 }
 
-module.exports = { process, compress };
+async function getBlob(args) {
+    const { file } = args.data;
+    return await Image.toBlob(file);
+}
+
+module.exports = { process, compress, getBlob };

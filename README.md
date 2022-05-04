@@ -1,3 +1,4 @@
-# Fyler
+# Image converter
 
-Convert images to PDF
+Convert jpeg to pdf
+

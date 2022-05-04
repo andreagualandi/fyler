@@ -5,7 +5,7 @@ const path = require('path');
 
 function getDownloadPath(args) {
     const dir = app.getPath('downloads');
-    return path.join(dir, args.data.fileName);
+    return typeof args.data.fileName === "string" ? path.join(dir, args.data.fileName) : dir;
 }
 
 async function getFiles(args) {
@@ -18,4 +18,12 @@ async function getFolder(args) {
     return !response.canceled ? response.filePaths[0] : '';
 }
 
-module.exports = { getDownloadPath, getFiles, getFolder };
+
+async function showSaveDialog(args) {
+    const dir = app.getPath('downloads');
+    return dialog.showSaveDialog({
+        defaultPath: dir
+    })
+}
+
+module.exports = { getDownloadPath, showSaveDialog, getFiles, getFolder };

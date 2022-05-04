@@ -2,18 +2,12 @@
 
 const ipc = require('electron').ipcMain
 
-const { process, compress } = require('./controllers/ImageController');
-const { getFiles, getFolder } = require('./controllers/AppController');
+const ImageController = require('./controllers/ImageController');
+const AppController = require('./controllers/AppController');
 
 const routes = {
-    image: {
-        process: process,
-        compress: compress,
-    },
-    app: {
-        getFiles: getFiles,
-        getFolder: getFolder,
-    }
+    image: ImageController,
+    app: AppController
 };
 
 async function imageRoute(event, args) {

@@ -1,16 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './global.less';
-import Main from './components/Main';
+import App from './App.svelte';
 
-document.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    return false;
-}, false);
+const app = new App({
+    target: document.body,
+    props: {
+        name: 'world'
+    }
+});
 
-document.addEventListener('drop', (e) => {
-    e.preventDefault();
-    return false;
-}, false);
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+export default app;
