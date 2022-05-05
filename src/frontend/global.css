@@ -1,3 +1,13 @@
+:root {
+    --hover: #5863ad;
+    --background-1: #292a34;
+    --background-2: #2E2F3A;
+    --foreground-1: #444f97;
+    --foreground-2: #5b64a0;
+    --text: #B4B3BA
+}
+
+
 html,
 body {
     overflow: hidden;
@@ -6,20 +16,22 @@ body {
     margin: 0;
     /* background: #202020;
     color: #a8a8a8;*/
-    background-color: #2E2F3A;
-    color: #B4B3BA;
+    background-color: var(--background-2);
+    color: var(--text);
 }
 
 input {
     background: #444452;
-    color: #B4B3BA;
+    color: var(--text);
     border: 1px solid hsl(0deg 0% 19%);
     border-radius: 2px;
 }
 
-input:focus-visible {
+input:focus {
     outline-style: solid;
     outline-color: #fff;
+    outline-offset: -2px;
+    outline-width: 1px;
 }
 
 select {
@@ -32,7 +44,7 @@ select {
     /* Personalize */
     flex: 1;
     padding: 0 1em;
-    color: #B4B3BA;
+    color: var(--text);
     background-color: #444452;
     background-image: none;
     cursor: pointer;
@@ -54,14 +66,14 @@ button {
     border-radius: 2px;
     cursor: pointer;
     margin: 0;
-    background-color: #444f97;
-    color: #B4B3BA;
+    background-color: var(--foreground-1);
+    color: var(--text);
     font-size: 1.2em;
 }
 
 button:hover {
     /*background-color: #515161;*/
-    background-color: #5863ad;
+    background-color: var(--hover);
 }
 
 /* width */
@@ -77,11 +89,11 @@ button:hover {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #444f97;
+    background: var(--foreground-1);
     border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #5863ad;
+    background: var(--hover);
 }

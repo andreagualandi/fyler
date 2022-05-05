@@ -1,8 +1,8 @@
 <script>
 	import { app, image } from "./Client";
-	import InputSubmit from "./components/InputSubmit.svelte";
 	import List from "./components/List.svelte";
 	import Progress from "./components/Progress.svelte";
+	import Options from "./components/Options.svelte";
 	import { afterUpdate, onMount } from "svelte";
 
 	let brightDropZone = false;
@@ -71,6 +71,7 @@
 	}
 
 	async function handleExecute() {
+		if (files.length == 0) return;
 		console.log("work params", files);
 
 		working = true;
@@ -114,7 +115,7 @@
 
 <main on:dragenter|preventDefault|self={dropZoneOn} on:drop|preventDefault={dropZoneOff} on:dragleave={dropZoneOff} ondragover="return false">
 	<div class="main-container">
-		<div class="flex-row color">
+		<div class="top-row color">
 			<div class="left-column {brightDropZone ? 'drop-zone' : ''}">
 				<List bind:items={files} getFiles={app.getFiles} bind:selected />
 			</div>
@@ -122,9 +123,9 @@
 				<img src={blobImg} alt="" />
 			</div>
 		</div>
-
-		<InputSubmit onSubmit={handleOpenFolder} bind:text={outFile} placeholder="Output" />
-		<button on:click={handleExecute}> execute </button>
+		<div class="bottom-row color">
+			<Options onSubmit={handleExecute} />
+		</div>
 	</div>
 
 	{#if working}
@@ -158,13 +159,14 @@
 		background-color: black;
 		display: flex;
 		justify-content: center;
+		align-items: center;
 	}
 
 	.right-column img {
 		object-fit: scale-down;
 	}
 
-	.flex-row {
+	.top-row {
 		display: flex;
 		padding: 10px;
 		width: 100%;
@@ -173,12 +175,18 @@
 		overflow: hidden;
 	}
 
+	.bottom-row {
+		margin-top: 10px;
+		padding: 10px;
+		display: flex;
+		box-sizing: border-box;
+	}
+
 	.color {
 		background-color: #292a34;
 	}
 
 	.drop-zone {
-		/*background-color: #514bcf;*/
 		border-color: #514bcf;
 		border-style: dotted;
 	}
