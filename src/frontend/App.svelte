@@ -7,7 +7,6 @@
 
 	let brightDropZone = false;
 	let files = [];
-	let outFile = "";
 	let selected = null;
 	let blobImg = null;
 
@@ -18,9 +17,9 @@
 	/*-- debug --*/
 	let time = 0;
 
-	onMount(async () => {
-		outFile = await app.getDownloadPath("outFile.pdf");
-	});
+	/* onMount(async () => {
+		options.oFolder = await app.getDownloadPath();
+	}); */
 
 	async function handleLoad(url) {
 		/* working = true;
@@ -63,26 +62,15 @@
 		//TODO HANDLE STOP
 	}
 
-	async function handleOpenFolder() {
-		const result = await app.showSaveDialog();
-		if (!result.canceled) {
-			outFile = result.filePath;
-		}
-	}
-
-	async function handleExecute() {
+	async function handleExecute(options) {
 		if (files.length == 0) return;
-		console.log("work params", files);
+		console.log("work params", files, JSON.stringify(options));
 
 		working = true;
 		//TODO working
-		const outFolder = await app.getDownloadPath();
 		console.log("work out");
-		const settings = {
-			oFolder: outFolder,
-			fileName: "test",
-		};
-		await image.process(files, settings);
+
+		//await image.process(files, options);
 		working = false;
 	}
 
@@ -148,6 +136,21 @@
 		flex-direction: column;
 	}
 
+	.top-row {
+		display: flex;
+		padding: 10px;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+
+	.bottom-row {
+		margin-top: 10px;
+		padding: 10px;
+		display: flex;
+		box-sizing: border-box;
+	}
 	.left-column {
 		width: calc(100% - 400px);
 		padding-right: 10px;
@@ -164,22 +167,6 @@
 
 	.right-column img {
 		object-fit: scale-down;
-	}
-
-	.top-row {
-		display: flex;
-		padding: 10px;
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		overflow: hidden;
-	}
-
-	.bottom-row {
-		margin-top: 10px;
-		padding: 10px;
-		display: flex;
-		box-sizing: border-box;
 	}
 
 	.color {

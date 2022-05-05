@@ -106,24 +106,24 @@
 <div class="file-list">
     <div class="controls">
         <button class="button-add" on:click|preventDefault={handleClickAddFiles}>
-            <Fa icon={faPlus} />
+            <Fa icon={faPlus} /> Add
         </button>
         <button class="button-clean" on:click|preventDefault={handleClickCleanFiles}>
-            <Fa icon={faTrashAlt} />
+            <Fa icon={faTrashAlt} /> Remove all
         </button>
         <button class="button-up" on:click|preventDefault={handleMoveUp}>
-            <Fa icon={faAngleUp} />
+            <Fa icon={faAngleUp} /> Move up
         </button>
         <button class="button-down" on:click|preventDefault={handleMoveDown}>
-            <Fa icon={faAngleDown} />
+            <Fa icon={faAngleDown} /> Move down
         </button>
     </div>
     <div class="list" on:drop|preventDefault={handleDropFiles}>
         {#each items as n, index (n)}
             <div
                 id="list-item"
-                class="list-item {selectedIndex == index ? 'selected' : ''}"
-                animate:flip
+                class="list-item"
+                animate:flip={{ duration: 400 }}
                 draggable={true}
                 on:dragstart={(e) => handleDragStart(e, index)}
                 on:drop|preventDefault={(e) => handleDrop(e, index)}
@@ -134,7 +134,7 @@
                 on:click={handleSelected(index)}
             >
                 <span class="item-number">{index + 1}</span>
-                <div class="item-name">{n}</div>
+                <div class="item-name {selectedIndex == index ? 'selected' : ''}">{n}</div>
                 <button class="list-item-remove" on:click={handleRemove(index)}><Fa icon={faTrashAlt} /></button>
             </div>
         {/each}
@@ -161,20 +161,24 @@
     }
 
     .list-item {
-        padding: 5px;
         width: 100%;
         display: flex;
         justify-content: space-between;
         box-sizing: border-box;
+        background: var(--background-4);
+        margin-bottom: 5px;
+        border-radius: 5px;
+        font-size: larger;
+    }
+
+    .list-item:hover {
+        box-shadow: inset 0px 0px 7px 2px var(--text);
     }
 
     .list-item-remove {
         width: 60px;
         text-align: center;
-    }
-
-    .list-item:not(:last-child) {
-        border-bottom: 1px solid #dbdbdb;
+        border-radius: 0px 5px 5px 0px;
     }
 
     .list-item.is-active {
@@ -182,12 +186,12 @@
     }
 
     .item-number {
-        background-color: #6864ed5c;
+        background-color: var(--foreground-1);
         width: 60px;
-        border: 1px solid black;
         justify-content: center;
         display: flex;
         align-items: center;
+        border-radius: 5px 0px 0px 5px;
     }
 
     .item-name {
@@ -201,10 +205,18 @@
     .controls {
         display: flex;
         padding: 10px;
+        background: var(--background-3);
+        justify-content: center;
+    }
+
+    .controls button {
+        margin-right: 10px;
+        width: 140px;
+        font-size: medium;
     }
 
     .selected {
-        background-color: #b4b3ba;
-        color: #444f97;
+        background-color: var(--text);
+        color: var(--background-4);
     }
 </style>

@@ -2,6 +2,8 @@
     --hover: #5863ad;
     --background-1: #292a34;
     --background-2: #2E2F3A;
+    --background-3: #363642;
+    --background-4: #444452;
     --foreground-1: #444f97;
     --foreground-2: #5b64a0;
     --text: #B4B3BA
@@ -21,15 +23,16 @@ body {
 }
 
 input {
-    background: #444452;
+    background: var(--background-4);
     color: var(--text);
     border: 1px solid hsl(0deg 0% 19%);
     border-radius: 2px;
+    padding-left: 5px;
 }
 
 input:focus {
     outline-style: solid;
-    outline-color: #fff;
+    outline-color: var(--text);
     outline-offset: -2px;
     outline-width: 1px;
 }
@@ -45,7 +48,7 @@ select {
     flex: 1;
     padding: 0 1em;
     color: var(--text);
-    background-color: #444452;
+    background-color: var(--background-4);
     background-image: none;
     cursor: pointer;
 
