@@ -10,7 +10,9 @@
         oFolder: "",
         fileName: "out_doc",
         exportMode: "single",
-        fileSuffix: "",
+        fileSuffix: "_new",
+        newWidth: 1024,
+        newHeight: 768,
     };
 
     onMount(async () => {
@@ -39,7 +41,7 @@
         </div>
         <div class="tile-container">
             <fieldset class="tile {options.exportMode !== 'single' && 'disabled'}" disabled={options.exportMode !== "single"}>
-                <div class="tile-header" on:click|preventDefault={() => handleChangeExportMode("single")}>Single file</div>
+                <div class="tile-header" on:click|preventDefault={() => handleChangeExportMode("single")}>Convert to PDF</div>
                 <div class="tile-body">
                     <span>Name:</span>
                     <input class="input-text" type="text" placeholder="es: out" bind:value={options.fileName} />
@@ -47,10 +49,14 @@
             </fieldset>
 
             <fieldset class="tile {options.exportMode !== 'multiple' && 'disabled'}" disabled={options.exportMode !== "multiple"}>
-                <div class="tile-header" on:click|preventDefault={() => handleChangeExportMode("multiple")}>Multiple file</div>
+                <div class="tile-header" on:click|preventDefault={() => handleChangeExportMode("multiple")}>Compress images</div>
                 <div class="tile-body">
                     <span>Suffix:</span>
                     <input class="input-text" type="text" placeholder="es: _new" bind:value={options.fileSuffix} />
+                    <span>Width:</span>
+                    <input class="input-text" type="text" placeholder="es: 1980" bind:value={options.newWidth} />
+                    <span>Heigth:</span>
+                    <input class="input-text" type="text" placeholder="es: 720" bind:value={options.newHeight} />
                 </div>
             </fieldset>
         </div>

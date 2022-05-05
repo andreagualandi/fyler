@@ -15,10 +15,11 @@ class Image {
         return 'data:image/jpeg;base64,' + buff.toString('base64');
     }
 
-    async resize(file, width) {
+    async resize(file, width = null, height = null) {
         return await sharp(file)
             .resize({
                 width: width,
+                height: height,
                 fit: sharp.fit.contain,
                 //position: sharp.strategy.entropy
                 withoutEnlargement: true,

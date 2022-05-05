@@ -7,7 +7,6 @@ const { PDFDocument } = require('pdf-lib');
 
 const fs = require('fs/promises');
 const path = require('path');
-const { Console } = require('console');
 
 async function compress(args) {
     const { files, settings } = args.data;
@@ -17,14 +16,13 @@ async function compress(args) {
             const fInfo = await File.getFileInfo(file);
 
             console.log('Compress:', fInfo.fullName);
-
-            const bytes = await Image.execute(file, fInfo.mime, 800);
-            await fs.writeFile(path.join(settings.oFolder, `${fInfo.name}_${settings.fileSuffix}${fInfo.ext}`), bytes);
+            const bytes = await Image.resize(file, settings.newWidth, settings.newHeight);
+            await fs.writeFile(path.join(settings.oFolder, `${fInfo.name}_${settings.fileSuffix}.jpg`), bytes);
         })
     );
 }
 
-async function process(args) {
+async function toPdf(args) {
     const { files, settings } = args.data;
     //execute
     const pdf = await PDFDocument.create()
@@ -57,4 +55,4 @@ async function getBlob(args) {
     return await Image.toBlob(file);
 }
 
-module.exports = { process, compress, getBlob };
+module.exports = { toPdf, compress, getBlob };

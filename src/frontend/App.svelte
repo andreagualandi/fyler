@@ -69,8 +69,12 @@
 		working = true;
 		//TODO working
 		console.log("work out");
+		if (options.exportMode == "single") {
+			await image.toPdf(files, options);
+		} else {
+			await image.compress(files, options);
+		}
 
-		//await image.process(files, options);
 		working = false;
 	}
 
