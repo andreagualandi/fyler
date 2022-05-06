@@ -4,7 +4,11 @@
     import Fa from "svelte-fa";
     import { faPlay, faFolder } from "@fortawesome/free-solid-svg-icons";
 
+    import Options from "../Options";
+
     export let onSubmit;
+
+    let opt = new Options();
 
     let options = {
         oFolder: "",
@@ -17,6 +21,9 @@
 
     onMount(async () => {
         options.oFolder = await app.getDownloadPath();
+        opt.validate();
+        opt.oFolder = "ciao";
+        opt.validate();
     });
 
     async function handleOpenFolder() {
@@ -54,9 +61,9 @@
                     <span>Suffix:</span>
                     <input class="input-text" type="text" placeholder="es: _new" bind:value={options.fileSuffix} />
                     <span>Width:</span>
-                    <input class="input-text" type="text" placeholder="es: 1980" bind:value={options.newWidth} />
+                    <input class="input-text" type="number" placeholder="es: 1980" bind:value={options.newWidth} />
                     <span>Heigth:</span>
-                    <input class="input-text" type="text" placeholder="es: 720" bind:value={options.newHeight} />
+                    <input class="input-text" type="number" placeholder="es: 720" bind:value={options.newHeight} />
                 </div>
             </fieldset>
         </div>

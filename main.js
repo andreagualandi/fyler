@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, protocol } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
 require('./src/backend/index');
@@ -16,6 +16,8 @@ function createWindow() {
 
     // Create the browser window.
     mainWindow = new BrowserWindow({
+        width: 1024,
+        height: 768,
         minWidth: 1024,
         minHeight: 768,
         webPreferences: {
@@ -34,6 +36,7 @@ function createWindow() {
         mainWindow.loadFile(path.join(__dirname, "public/index.html"));
     }
 
+    mainWindow.removeMenu();
     // Open the DevTools and also disable Electron Security Warning.
     // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
