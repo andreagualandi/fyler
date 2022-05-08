@@ -34,9 +34,9 @@ function createWindow() {
         mainWindow.webContents.openDevTools();
     } else {
         mainWindow.loadFile(path.join(__dirname, "public/index.html"));
+        mainWindow.removeMenu();
     }
 
-    mainWindow.removeMenu();
     // Open the DevTools and also disable Electron Security Warning.
     // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 

@@ -17,7 +17,7 @@ async function compress(args) {
 
             console.log('Compress:', fInfo.fullName);
             const bytes = await Image.resize(file, settings.newWidth, settings.newHeight);
-            await fs.writeFile(path.join(settings.oFolder, `${fInfo.name}_${settings.fileSuffix}.jpg`), bytes);
+            await fs.writeFile(path.join(settings.oFolder, `${fInfo.name}_new.jpg`), bytes);
         })
     );
 }

@@ -85,6 +85,15 @@ button:hover {
     background-color: var(--hover);
 }
 
+fieldset {
+    border-width: 1px;
+}
+
+fieldset legend {
+    display: flex;
+    align-items: center;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 15px;
