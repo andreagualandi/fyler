@@ -1,8 +1,8 @@
 export default class Options {
     constructor() {
         this.oFolder = "";
-        this.fileName = "out_doc";
-        this.exportMode = "single";
+        this.fileName = "output_file";
+        this.exportMode = "pdf";
         this.newWidth = 1024;
         this.newHeight = 768;
         this.errors = {};

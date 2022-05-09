@@ -1,5 +1,5 @@
 :root {
-    --hover: #5863ad;
+    --hover: #878db7;
     --background-1: #292a34;
     --background-2: #2E2F3A;
     --background-3: #363642;
@@ -90,8 +90,7 @@ fieldset {
 }
 
 fieldset legend {
-    display: flex;
-    align-items: center;
+    color: var(--text);
 }
 
 /* width */
