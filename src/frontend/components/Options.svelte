@@ -6,6 +6,7 @@
     import OptResolution from "./OptResolution.svelte";
     import OptQuality from "./OptQuality.svelte";
     import OptMode from "./OptMode.svelte";
+    import OptFolder from "./OptFolder.svelte";
 
     import Options from "../Options";
 
@@ -13,45 +14,34 @@
 
     let options = new Options();
     let hasQuality = false;
-    let hasResize = false;
-    let errors = { oFolder: "", exportMode: "", fileName: "", fileSuffix: "", newWidth: "", newHeight: "" };
+    let errors = {};
 
     onMount(async () => {
         options.oFolder = await app.getDownloadPath();
     });
 
     async function handleSubmit() {
-        console.log("options", JSON.stringify(options));
+        errors = {};
+        console.log("errors", JSON.stringify(errors));
         if (!options.validate()) {
-            errors = { ...errors, ...options.errors };
+            errors = options.errors;
             return false;
         }
         return onSubmit(options);
-    }
-
-    async function handleOpenFolder() {
-        const result = await app.getFolder();
-        if (result) {
-            options.oFolder = result;
-        }
     }
 </script>
 
 <form class="options-form" on:submit|preventDefault={handleSubmit}>
     <div class="input-fields">
-        <div class="out-folder">
-            <input class="input-text" type="text" placeholder="Output folder" bind:value={options.oFolder} />
-            <p>{errors.oFolder}</p>
-            <button class="input-button" on:click|preventDefault={handleOpenFolder}><Fa icon={faFolder} /></button>
-        </div>
+        <OptFolder bind:src={options.oFolder} errorMsg={errors.oFolder} />
         <div class="flex-row">
-            <fieldset>
+            <fieldset class="options-image">
                 <legend>Image options</legend>
-                <OptResolution bind:checked={hasResize} bind:width={options.newWidth} bind:height={options.newHeight} />
-                <OptQuality bind:checked={hasQuality} bind:quality={options.quality} />
+                <OptResolution bind:width={options.newWidth} bind:height={options.newHeight} errorMsg={errors.resolution} />
+                <OptQuality bind:checked={hasQuality} bind:quality={options.quality} errorMsg={errors.quality} />
             </fieldset>
 
-            <OptMode bind:mode={options.exportMode} bind:fileName={options.fileName} />
+            <OptMode bind:mode={options.exportMode} bind:fileName={options.fileName} errorMsg={errors.fileName} />
         </div>
     </div>
 
@@ -64,23 +54,18 @@
         width: 100%;
     }
 
+    .options-image {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
     .input-fields {
         display: flex;
         width: 100%;
         flex-direction: column;
         padding-right: 10px;
-    }
-
-    .input-text {
-        height: 2em;
-    }
-
-    .out-folder {
-        display: flex;
-    }
-
-    .out-folder input {
-        width: 100%;
+        justify-content: space-around;
     }
 
     .flex-row {

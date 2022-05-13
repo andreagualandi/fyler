@@ -69,6 +69,7 @@
 		working = true;
 		//TODO working
 		console.log("work out");
+
 		if (options.exportMode == "single") {
 			await image.toPdf(files, options);
 		} else {
@@ -154,6 +155,7 @@
 		padding: 10px;
 		display: flex;
 		box-sizing: border-box;
+		height: 25%;
 	}
 	.left-column {
 		width: calc(100% - 400px);

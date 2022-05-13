@@ -16,9 +16,10 @@
     }
     input[type="checkbox"] {
         accent-color: var(--foreground-1);
-        width: 1.3em;
-        height: 1.3em;
+        width: 1.1em;
+        height: 1.1em;
         cursor: pointer;
+        margin: 0;
     }
 
     input[type="checkbox"]:focus {

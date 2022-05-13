@@ -1,17 +1,15 @@
 <script>
-    import Checkbox from "./Checkbox.svelte";
-
-    export let checked = false;
     export let width = 0;
     export let height = 0;
+    export let errorMsg = "";
 </script>
 
-<div class="row-flex">
-    <Checkbox bind:checked text="Resize" />
-    <fieldset class="row-flex {!checked && 'disabled'}" disabled={!checked}>
-        <input class="input-text" type="number" placeholder="width" bind:value={width} />
-        <span>x</span>
-        <input class="input-text" type="number" placeholder="height" bind:value={height} />
+<div class="row-flex" data-tooltip={errorMsg || null}>
+    <span class="label">Resolution:</span>
+    <fieldset class="row-flex">
+        <input class="input-text {errorMsg && 'error'}" type="number" placeholder="width" bind:value={width} />
+        <span class="x">x</span>
+        <input class="input-text {errorMsg && 'error'}" type="number" placeholder="height" bind:value={height} />
     </fieldset>
 </div>
 
@@ -21,22 +19,26 @@
         align-items: center;
     }
 
-    .row-flex span {
-        padding-left: 5px;
-        padding-right: 5px;
+    .label {
+        width: 100px;
+    }
+
+    .x {
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     .input-text {
         width: 100px;
     }
 
-    .disabled {
-        opacity: 0.5;
-    }
-
     .row-flex fieldset {
         border: none;
         margin: 0;
         padding: 0;
+    }
+
+    .error {
+        background-color: var(--error-text);
     }
 </style>

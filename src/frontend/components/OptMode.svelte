@@ -1,6 +1,7 @@
 <script>
     export let mode = "pdf";
     export let fileName = null;
+    export let errorMsg = "";
 </script>
 
 <fieldset class="column-flex">
@@ -9,11 +10,11 @@
         <input type="radio" bind:group={mode} value="jpg" />
         <span>JPG</span>
     </div>
-    <div class="radiobutton">
+    <div class="radiobutton" data-tooltip={errorMsg || null}>
         <input type="radio" bind:group={mode} value="pdf" />
         <span>PDF</span>
         <input
-            class="input-text {mode != 'pdf' && 'disabled'}"
+            class="input-text {mode != 'pdf' && 'disabled'} {errorMsg && 'error'}"
             type="text"
             placeholder="file name"
             bind:value={fileName}
@@ -56,5 +57,9 @@
 
     .disabled {
         opacity: 0.5;
+    }
+
+    .error {
+        background-color: var(--error-text);
     }
 </style>

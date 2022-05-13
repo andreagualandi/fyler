@@ -5,30 +5,38 @@ export default class Options {
         this.exportMode = "pdf";
         this.newWidth = 1024;
         this.newHeight = 768;
+        this.quality = 90;
         this.errors = {};
     }
 
     validate() {
+        this.errors = {};
         if (this.oFolder.length === 0) {
             this.errors.oFolder = "Output folder missing";
         }
 
-        if (this.fileName.length === 0) {
+        if (this.exportMode === "pdf" && this.fileName.length === 0) {
             this.errors.fileName = "Filename missing";
         }
 
-        if (this.exportMode !== "single" && this.exportMode !== "multiple") {
+        if (this.exportMode !== "pdf" && this.exportMode !== "jpg") {
             this.errors.exportMode = "Wrong export mode";
         }
 
-        if (this.newWidth <= 200) {
-            this.errors.newWidth = "Width must be >= 200";
+        if (this.quality < 1 || this.quality > 100) {
+            this.errors.quality = "Quality must be between 1 and 100";
         }
 
-        if (this.newHeight <= 200) {
-            this.errors.newHeight = "Height must be >= 200";
-        }
+        this.isResolutionValid();
 
         return Object.keys(this.errors).length === 0;
+    }
+
+    isResolutionValid() {
+        if (this.newWidth <= 200) {
+            this.errors.resolution = "Width and Height must be >= 200";
+            return false;
+        }
+        return true;
     }
 }
