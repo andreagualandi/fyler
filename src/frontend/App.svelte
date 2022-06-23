@@ -70,7 +70,7 @@
 		//TODO working
 		console.log("work out");
 
-		if (options.exportMode == "single") {
+		if (options.exportMode == "pdf") {
 			await image.toPdf(files, options);
 		} else {
 			await image.compress(files, options);
