@@ -52,8 +52,8 @@ async function toPdf(args) {
 }
 
 async function getBlob(args) {
-    const { file } = args.data;
-    return await Image.toBlob(file);
+    const { file, settings } = args.data;
+    return await Image.toBlob(file, settings);
 }
 
 module.exports = { toPdf, compress, getBlob };

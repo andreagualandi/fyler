@@ -31,7 +31,7 @@ async function call(endpoint, action, data = {}) {
 const image = {
     toPdf: (files, settings) => call('api-image', 'toPdf', { files: files, settings: settings }),
     compress: (files, settings) => call('api-image', 'compress', { files: files, settings: settings }),
-    getBlob: (file) => call('api-image', 'getBlob', { file: file })
+    getBlob: (file, settings) => call('api-image', 'getBlob', { file: file, settings: settings })
 }
 
 const app = {

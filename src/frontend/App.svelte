@@ -4,6 +4,7 @@
 	import Progress from "./components/Progress.svelte";
 	import Options from "./components/Options.svelte";
 	import { afterUpdate } from "svelte";
+	import Opt from "../frontend/Options";
 
 	let brightDropZone = false;
 	let files = [];
@@ -82,7 +83,8 @@
 
 	//todo check performance
 	$: if (selected != null) {
-		image.getBlob(selected).then((blob) => (blobImg = blob));
+		const opt = new Opt();
+		image.getBlob(selected, opt).then((blob) => (blobImg = blob));
 	}
 
 	afterUpdate(() => {
