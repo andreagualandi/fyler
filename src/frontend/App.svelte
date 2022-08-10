@@ -3,7 +3,7 @@
 	import List from "./components/List.svelte";
 	import Progress from "./components/Progress.svelte";
 	import Options from "./components/Options.svelte";
-	import { afterUpdate, onMount } from "svelte";
+	import { afterUpdate } from "svelte";
 
 	let brightDropZone = false;
 	let files = [];
@@ -16,10 +16,6 @@
 
 	/*-- debug --*/
 	let time = 0;
-
-	/* onMount(async () => {
-		options.oFolder = await app.getDownloadPath();
-	}); */
 
 	async function handleLoad(url) {
 		/* working = true;

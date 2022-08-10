@@ -7,10 +7,10 @@ class Image {
         this.image = null;
     }
 
-    async toBlob(file) {
+    async toBlob(file, opt) {
         const buff = await sharp(file)
             .resize({ width: 400 })
-            .toFormat('jpeg')
+            .jpeg(opt.quality)
             .toBuffer();
         return 'data:image/jpeg;base64,' + buff.toString('base64');
     }
@@ -25,8 +25,12 @@ class Image {
                 withoutEnlargement: true,
                 background: { r: 255, g: 255, b: 255 }
             })
-            .toFormat('jpeg')
+            .jpeg(opt.quality)
             .toBuffer();
+    }
+
+    async toBuffer(file) {
+        return await sharp(file).jpeg().toBuffer();
     }
 }
 

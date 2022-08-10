@@ -30,7 +30,8 @@ async function toPdf(args) {
     //Process images in parallel
     const newImages = await Promise.all(
         files.map(async (item) => {
-            const bytes = await Image.resize(item, 800);
+            //const bytes = await Image.resize(item, 800);
+            const bytes = await Image.toBuffer(item);
 
             return await pdf.embedJpg(bytes);
         })
